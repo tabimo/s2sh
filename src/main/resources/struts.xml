@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+<package name="pgk" namespace="/" extends="struts-default">
+	<!-- 配置action管理页面的跳转
+		 action中的name就是相当于Struts1.do的请求名字，例子
+		 class对应Spring id
+		 method 方法参数
+		<action name="User_*" class="" method="{1}">
+			<result name="">/index.jsp</result>
+		</action>
+		页面的URL：http://localhost:8080/s2sh/User_add
+	 -->
+	<action name="" class="" method="{1}">
+		<result name="">/index.jsp</result>
+	</action>
+</package>
+</struts>    
