@@ -4,7 +4,17 @@
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
-  
+  <!-- 验证码  -->
+	<servlet>
+		<description>ValidateCode</description>
+		<display-name>ValidateCode</display-name>
+		<servlet-name>ValidateCode</servlet-name>
+		<servlet-class>com.s2sh.util.ValidateCode</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ValidateCode</servlet-name>
+		<url-pattern>/ValidateCode.do</url-pattern>
+	</servlet-mapping>
   <!-- Spring Context Listener -->  
     <listener>  
         <listener-class>  

@@ -19,5 +19,9 @@
 		<result name="index_view">/index.jsp</result>
 		<result name="error_view">/index.jsp</result>
 	</action>
+	<action name="Article_*" class="ArticleAction" method="{1}">
+		<result name="get_article">/jsp/publicArticle.jsp</result>
+		<result name="error_view">/index.jsp</result>
+	</action>
 </package>
 </struts>    

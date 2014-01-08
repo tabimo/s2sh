@@ -18,5 +18,7 @@
 	<bean id="TuserServiceImpl" class="com.s2sh.service.impl.TuserServiceImpl">
 		<property name="baseDao" ref="BaseDaoImpl"></property>
 	</bean>
-		
-	</beans>
+	<bean id="ArticleTypeServiceImpl" class="com.s2sh.service.impl.ArticleTypeServiceImpl">
+		<property name="baseDao" ref="BaseDaoImpl"></property>
+	</bean>
+</beans>

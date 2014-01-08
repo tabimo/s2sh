@@ -8,7 +8,7 @@ public class Article implements java.io.Serializable {
 
 	// Fields
 
-	private Integer id;//add 
+	private Integer id;
 	private Articletype articletype;
 	private Tuser tuser;
 	private String keyword;

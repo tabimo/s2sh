@@ -18,4 +18,7 @@
 	<bean id="TuserAction" class="com.s2sh.action.TuserAction" scope="prototype">
 		<property name="userService" ref="TuserServiceImpl"></property>
 	</bean>	
+	<bean id="ArticleAction" class="com.s2sh.action.ArticleAction" scope="prototype">
+		<property name="articleTypeService" ref="ArticleTypeServiceImpl"></property>
+	</bean>	
 </beans>

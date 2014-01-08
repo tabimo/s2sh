@@ -8,5 +8,5 @@ import com.s2sh.entity.Articletype;
 import com.s2sh.util.Pager;
 
 public interface IArticleTypeService {
-
+	public List<?> getArticleTypeList();
 }

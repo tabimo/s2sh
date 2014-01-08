@@ -25,7 +25,7 @@ public interface IBaseDao<T> {
 	 * @param params
 	 * @return
 	 */
-	public List<?> findAll(String hql,int num, Class<?> entityClass, Object[] params);
+	public List<?> findAll(String hql,int num, Object[] params);
 
 	/**
 	 * 

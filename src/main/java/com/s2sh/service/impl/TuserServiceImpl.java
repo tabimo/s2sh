@@ -29,7 +29,6 @@ public class TuserServiceImpl implements ITuserService {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
 	@Override
 	public Tuser isLogin(Tuser tuser){
 		try {

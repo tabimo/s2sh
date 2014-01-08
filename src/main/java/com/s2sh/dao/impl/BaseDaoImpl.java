@@ -90,12 +90,13 @@ public class BaseDaoImpl<T> implements IBaseDao<T> {
     }  
   
     @Override  
-    public List<?> findAll(String hql,int num,Class<?> entityClass,   
-            Object[] params) {  
-        Query query = getSession().createQuery(hql);  
-        for (int i = 0; i < params.length; i++) {  
-            query.setParameter(i, params[i]);  
-        }  
+    public List<?> findAll(String hql,int num,Object[] params) {     	
+        Query query = getSession().createQuery(hql); 
+        if(params!=null){
+	        for (int i = 0; i < params.length; i++) {  
+	            query.setParameter(i, params[i]);  
+	        }  
+        }       
         if (num!=-1) {
         	return query.setMaxResults(num).list();
 		}else{
