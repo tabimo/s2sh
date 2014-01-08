@@ -1,7 +1,10 @@
 package com.s2sh.dao.impl;
 
+import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 
+import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -9,14 +12,11 @@ import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.orm.hibernate3.HibernateCallback;
-import org.springframework.orm.hibernate3.HibernateTemplate;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
-import org.springframework.stereotype.Repository;
+import org.hibernate.criterion.Restrictions;
+
 
 import com.s2sh.dao.IBaseDao;
+import com.s2sh.entity.Tuser;
 import com.s2sh.util.Pager;
 
 
@@ -36,7 +36,7 @@ public class BaseDaoImpl<T> implements IBaseDao<T> {
     
     @Override  
     public <T> void save(T t) {  
-        getSession().save(t);  
+        getSession().save(t);
     }  
   
     @Override  
@@ -105,5 +105,66 @@ public class BaseDaoImpl<T> implements IBaseDao<T> {
         query.setMaxResults(maxResult);  
         return (List<T>) query.list();  
     }  
-	
+    
+	public List<Object[]> findBySql(String sql) {
+		SQLQuery q = getSession().createSQLQuery(sql);
+		return q.list();
+	}
+
+	public List<Object[]> findBySql(String sql, int page, int rows) {
+		SQLQuery q = getSession().createSQLQuery(sql);
+		return q.setFirstResult((page - 1) * rows).setMaxResults(rows).list();
+	}
+
+
+	public List<Object[]> findBySql(String sql, Map<String, Object> params) {
+		SQLQuery q = getSession().createSQLQuery(sql);
+		if (params != null && !params.isEmpty()) {
+			for (String key : params.keySet()) {
+				q.setParameter(key, params.get(key));
+			}
+		}
+		return q.list();
+	}
+
+	public List<Object[]> findBySql(String sql, Map<String, Object> params, int page, int rows) {
+		SQLQuery q = getSession().createSQLQuery(sql);
+		if (params != null && !params.isEmpty()) {
+			for (String key : params.keySet()) {
+				q.setParameter(key, params.get(key));
+			}
+		}
+		return q.setFirstResult((page - 1) * rows).setMaxResults(rows).list();
+	}
+
+	public int executeSql(String sql) {
+		SQLQuery q = getSession().createSQLQuery(sql);
+		return q.executeUpdate();
+	}
+
+	public int executeSql(String sql, Map<String, Object> params) {
+		SQLQuery q = getSession().createSQLQuery(sql);
+		if (params != null && !params.isEmpty()) {
+			for (String key : params.keySet()) {
+				q.setParameter(key, params.get(key));
+			}
+		}
+		return q.executeUpdate();
+	}
+
+	public BigInteger countBySql(String sql) {
+		SQLQuery q = getSession().createSQLQuery(sql);
+		return (BigInteger) q.uniqueResult();
+	}
+
+	public BigInteger countBySql(String sql, Map<String, Object> params) {
+		SQLQuery q = getSession().createSQLQuery(sql);
+		if (params != null && !params.isEmpty()) {
+			for (String key : params.keySet()) {
+				q.setParameter(key, params.get(key));
+			}
+		}
+		return (BigInteger) q.uniqueResult();
+	}
+  
 }
