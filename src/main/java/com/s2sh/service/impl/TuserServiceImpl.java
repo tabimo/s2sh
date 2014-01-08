@@ -31,13 +31,19 @@ public class TuserServiceImpl implements ITuserService {
 	}
 
 	@Override
-	public Tuser isLogin(Tuser tuser) {
-		System.out.println("进入service方法！！！");
-		String hql = "from Tuser where username = ? and password = ?";
-		List<Tuser> list = (List<Tuser>) baseDao.findAll(hql,1,Tuser.class, new Object[] {
-				tuser.getUsername(), tuser.getPassword() });
-		if (list.size() > 0) {
-			return (Tuser) list.get(0);
+	public Tuser isLogin(Tuser tuser){
+		try {
+			DetachedCriteria dc=DetachedCriteria.forClass(Tuser.class);
+			dc.add(Restrictions.eq("username", tuser.getUsername()));
+			dc.add(Restrictions.eq("password", tuser.getPassword()));
+			List<Tuser> list=(List<Tuser>) baseDao.findByDetachList(dc);
+			System.out.println(list.size());
+			if (list.size()>0) {
+				return list.get(0);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
 		}
 		return null;
 	}

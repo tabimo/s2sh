@@ -12,6 +12,7 @@ import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Example;
 import org.hibernate.criterion.Restrictions;
 
 
@@ -174,6 +175,33 @@ public class BaseDaoImpl<T> implements IBaseDao<T> {
 			}
 		}
 		return (Integer) q.uniqueResult();
+	}
+	
+	@Override
+	public Integer findByCountList(DetachedCriteria dc) throws Exception {
+		// TODO Auto-generated method stub
+		Criteria c =  dc.getExecutableCriteria(getSession());
+		List<?> list = c.list();
+		return list.size();
+	}
+	
+	@Override
+	public List<?> findByDetachList(DetachedCriteria dc) throws Exception {
+		// TODO Auto-generated method stub
+		Criteria c =  dc.getExecutableCriteria(getSession());
+		List<?> list = c.list();
+		return list;
+	}
+	
+	@Override
+	public List<?> findByDetachList(DetachedCriteria dc, Pager page)
+			throws Exception {
+		Criteria c =  dc.getExecutableCriteria(getSession());
+		//分页
+		c.setFirstResult(page.getPageSize()*page.getCurrentPage());
+		c.setMaxResults(page.getPageSize());
+		List<?> list = c.list();
+		return list;
 	}
   
 }

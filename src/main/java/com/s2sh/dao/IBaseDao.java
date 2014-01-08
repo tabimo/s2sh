@@ -2,6 +2,10 @@ package com.s2sh.dao;
 
 import java.util.List;
 import java.util.Map;
+
+import org.hibernate.criterion.DetachedCriteria;
+
+import com.s2sh.util.Pager;
 public interface IBaseDao<T> {
 	public int save(T t);
 
@@ -97,4 +101,29 @@ public interface IBaseDao<T> {
 	 * @return 数目
 	 */
 	public Integer countBySql(String sql, Map<String, Object> params);
+	
+	/**
+	 * 组合查询
+	 * @param dc
+	 * @return 返回结果集
+	 * @throws Exception
+	 */
+	public List<?> findByDetachList(DetachedCriteria dc) throws Exception;
+	
+	/**
+	 * 组合查询带分页
+	 * @param dc 组合
+	 * @param page 分页对象
+	 * @return
+	 * @throws Exception
+	 */
+	public List<?> findByDetachList(DetachedCriteria dc,Pager page) throws Exception;
+	
+	/**
+	 * 查询总记录个数
+	 * @param dc
+	 * @return
+	 * @throws Exception
+	 */
+	public Integer findByCountList(DetachedCriteria dc) throws Exception;
 }

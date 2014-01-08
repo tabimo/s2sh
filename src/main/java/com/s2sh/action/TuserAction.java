@@ -55,7 +55,6 @@ public class TuserAction extends ActionBase{
 	}
 
 	public String index(){
-		System.out.println("进入action方法！！！");
 		Tuser login= userService.isLogin(tuser);
 		if (login!=null) {
 			session.put("user", login);
