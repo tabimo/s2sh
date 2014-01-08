@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
+
+<constant name="struts.devMode" value="false" />  
+    <constant name="struts.i18n.encoding" value="UTF-8" /> 
+
 <package name="pgk" namespace="/" extends="struts-default">
 	<!-- 配置action管理页面的跳转
 		 action中的name就是相当于Struts1.do的请求名字，例子
@@ -11,8 +15,9 @@
 		</action>
 		页面的URL：http://localhost:8080/s2sh/User_add
 	 -->
-	<action name="" class="" method="{1}">
-		<result name="">/index.jsp</result>
+	<action name="Tuser_*" class="TuserAction" method="{1}">
+		<result name="index_view">/index.jsp</result>
+		<result name="error_view">/index.jsp</result>
 	</action>
 </package>
 </struts>    

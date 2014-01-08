@@ -6,13 +6,19 @@
 <hibernate-configuration>
 
     <session-factory>
-        <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
-        <property name="connection.url">jdbc:mysql://192.168.1.200:3306/mvcdb</property>
-        <property name="connection.username">root</property>
-        <property name="connection.password">root</property>
-        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="myeclipse.connection.profile">mvcdb</property>
-    
+    	<property name="dialect">  
+            org.hibernate.dialect.MySQLDialect  
+        </property>  
+  
+        <property name="show_sql">true</property>  
+        <property name="format_sql">true</property>  
+        <!-- hbm2ddl.auto此属性属于自动建表，可选可不选 -->
+        <!-- <property name="hbm2ddl.auto">update</property> -->  
+         <!-- 引入需要映射的类 -->
+        <mapping resource="com/s2sh/entity/Article.hbm.xml"/>
+        <mapping resource="com/s2sh/entity/Articletype.hbm.xml"/>
+        <mapping resource="com/s2sh/entity/Comment.hbm.xml"/>
+        <mapping resource="com/s2sh/entity/Tuser.hbm.xml"/>
     </session-factory>
 
 </hibernate-configuration>
