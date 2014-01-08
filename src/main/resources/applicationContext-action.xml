@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+	">
+	<!-- Action管理 Action在管理的时候把scope="prototype"这个属性加上去 Spring管理action的时候是单例模式，这个的时候当我们重复取出对象的时候，会对数据存在干扰 
+		所以我们要把它改成非单例模式，就会创建一个新的对象，就不会导致数据混乱了 -->
+	<bean id="TuserAction" class="com.s2sh.action.TuserAction" scope="prototype">
+		<property name="userService" ref="TuserServiceImpl"></property>
+	</bean>	
+</beans>

@@ -15,8 +15,7 @@
 	">
 	
 	<!-- druid连接池 -->
-	<bean name="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
-		init-method="init" destroy-method="close">
+	<bean name="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
 		<property name="url" value="jdbc:mysql://192.168.1.200:3306/mvcdb?useUnicode=true&amp;characterEncoding=UTF-8" />
 		<property name="username" value="root" />
 		<property name="password" value="root" />
@@ -56,24 +55,10 @@
         class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"  
         p:dataSource-ref="dataSource"    
         p:configLocation="classpath:hibernate.cfg.xml" />
-	
-	
-	<!-- DAO管理 -->
-	<bean id="BaseDaoImpl" class="com.s2sh.dao.impl.BaseDaoImpl">
-		<property name="sessionFactory" ref="sessionFactory"></property>
-	</bean>
-	
-	<!-- 业务管理 -->
-	<bean id="TuserServiceImpl" class="com.s2sh.service.impl.TuserServiceImpl">
-		<property name="baseDao" ref="BaseDaoImpl"></property>
-	</bean>
-	
-		<!-- Action管理 Action在管理的时候把scope="prototype"这个属性加上去 Spring管理action的时候是单例模式，这个的时候当我们重复取出对象的时候，会对数据存在干扰 
-		所以我们要把它改成非单例模式，就会创建一个新的对象，就不会导致数据混乱了 -->
-	<bean id="TuserAction" class="com.s2sh.action.TuserAction" scope="prototype">
-		<property name="userService" ref="TuserServiceImpl"></property>
-	</bean>
-	
+    <import resource="classpath*:applicationContext-dao.xml"/>
+    <import resource="classpath*:applicationContext-service.xml"/>
+    <import resource="classpath*:applicationContext-action.xml"/>
+    
 	<!-- 事务管理 -->
 	<!-- TransactionManager -->  
     <bean id="transactionManager"  

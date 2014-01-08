@@ -35,66 +35,75 @@ public class BaseDaoImpl<T> implements IBaseDao<T> {
     }
     
     @Override  
-    public <T> void save(T t) {  
-        getSession().save(t);
+    public int save(T t) { 
+    	try {
+    		getSession().save(t);
+            return baseNum;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return 0;
+		}
+        
     }  
   
     @Override  
-    public <T> void delete(T t) {  
-        getSession().delete(t);  
+    public int delete(T t) { 
+        try {
+    		getSession().delete(t);
+            return baseNum;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return 0;
+		}
     }  
   
     @Override  
-    public <T> void delete(Class<T> entityClass, Integer id) {  
-        getSession().delete(get(entityClass, id));  
+    public int deleteById(Class<?> entityClass, Integer id) {  
+    	try {
+    		getSession().delete(get(entityClass, id));  
+    		return baseNum;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return 0;
+		}
     }  
   
     @Override  
-    public <T> void update(T t) {  
-        getSession().update(t); 
+    public int update(T t) {  
+    	try {
+    		getSession().update(t); 
+    		return baseNum;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return 0;
+		}
     }  
   
     @Override  
-    public <T> T get(Class<T> entityClass, Integer id) {  
-        return (T) getSession().get(entityClass, id);  
+    public Object get(Class<?> entityClass, Integer id) {  
+        return getSession().get(entityClass, id);  
     }  
   
     @Override  
-    public <T> List<T> findAll(String hql, Class<T> entityClass) {  
-        return findAll(hql, entityClass, new Object[] {});  
-    }  
-  
-    @Override  
-    public <T> List<T> findAll(String hql, Class<T> entityClass, Object param) {  
-        return findAll(hql, entityClass, new Object[] { param });  
-    }  
-  
-    @Override  
-    public <T> List<T> findAll(String hql, Class<T> entityClass,   
+    public List<?> findAll(String hql,int num,Class<?> entityClass,   
             Object[] params) {  
         Query query = getSession().createQuery(hql);  
         for (int i = 0; i < params.length; i++) {  
             query.setParameter(i, params[i]);  
         }  
-        return (List<T>) query.list();  
+        if (num!=-1) {
+        	return query.setMaxResults(num).list();
+		}else{
+			return query.list();
+		}
     }  
   
     @Override  
-    public <T> List<T> findByPage(final String hql, Class<T> entityClass,  
-            final int firstResult, final int maxResult) {  
-        return findByPage(hql, entityClass, new Object[] {}, firstResult,  
-                maxResult);  
-    }  
-  
-    @Override  
-    public <T> List<T> findByPage(final String hql, Class<T> entityClass,  
-            final Object param, final int firstResult, final int maxResult) {  
-        return findByPage(hql, entityClass, new Object[] { param },  
-                firstResult, maxResult);  
-    }  
-  
-    @Override  
-    public <T> List<T> findByPage(final String hql, Class<T>     
+    public List<?> findByPage(final String hql, Class<?>     
             entityClass, final Object[] params, final int firstResult,   
             final int maxResult) {  
         Query query = getSession().createQuery(hql);  
@@ -103,20 +112,20 @@ public class BaseDaoImpl<T> implements IBaseDao<T> {
         }  
         query.setFirstResult(firstResult);  
         query.setMaxResults(maxResult);  
-        return (List<T>) query.list();  
+        return query.list();  
     }  
-    
+    @Override  
 	public List<Object[]> findBySql(String sql) {
 		SQLQuery q = getSession().createSQLQuery(sql);
 		return q.list();
 	}
-
-	public List<Object[]> findBySql(String sql, int page, int rows) {
+	@Override  
+	public List<Object[]> findBySqlPagerList(String sql, int page, int rows) {
 		SQLQuery q = getSession().createSQLQuery(sql);
 		return q.setFirstResult((page - 1) * rows).setMaxResults(rows).list();
 	}
 
-
+	@Override  
 	public List<Object[]> findBySql(String sql, Map<String, Object> params) {
 		SQLQuery q = getSession().createSQLQuery(sql);
 		if (params != null && !params.isEmpty()) {
@@ -126,8 +135,8 @@ public class BaseDaoImpl<T> implements IBaseDao<T> {
 		}
 		return q.list();
 	}
-
-	public List<Object[]> findBySql(String sql, Map<String, Object> params, int page, int rows) {
+	@Override  
+	public List<Object[]> findBySqlPagerList(String sql, Map<String, Object> params, int page, int rows) {
 		SQLQuery q = getSession().createSQLQuery(sql);
 		if (params != null && !params.isEmpty()) {
 			for (String key : params.keySet()) {
@@ -136,12 +145,12 @@ public class BaseDaoImpl<T> implements IBaseDao<T> {
 		}
 		return q.setFirstResult((page - 1) * rows).setMaxResults(rows).list();
 	}
-
+	@Override  
 	public int executeSql(String sql) {
 		SQLQuery q = getSession().createSQLQuery(sql);
 		return q.executeUpdate();
 	}
-
+	@Override  
 	public int executeSql(String sql, Map<String, Object> params) {
 		SQLQuery q = getSession().createSQLQuery(sql);
 		if (params != null && !params.isEmpty()) {
@@ -151,20 +160,20 @@ public class BaseDaoImpl<T> implements IBaseDao<T> {
 		}
 		return q.executeUpdate();
 	}
-
-	public BigInteger countBySql(String sql) {
+	@Override  
+	public Integer countBySql(String sql) {
 		SQLQuery q = getSession().createSQLQuery(sql);
-		return (BigInteger) q.uniqueResult();
+		return (Integer) q.uniqueResult();
 	}
-
-	public BigInteger countBySql(String sql, Map<String, Object> params) {
+	@Override  
+	public Integer countBySql(String sql, Map<String, Object> params) {
 		SQLQuery q = getSession().createSQLQuery(sql);
 		if (params != null && !params.isEmpty()) {
 			for (String key : params.keySet()) {
 				q.setParameter(key, params.get(key));
 			}
 		}
-		return (BigInteger) q.uniqueResult();
+		return (Integer) q.uniqueResult();
 	}
   
 }

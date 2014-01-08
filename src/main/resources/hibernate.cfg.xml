@@ -8,8 +8,7 @@
     <session-factory>
     	<property name="dialect">  
             org.hibernate.dialect.MySQLDialect  
-        </property>  
-  
+        </property> 
         <property name="show_sql">true</property>  
         <property name="format_sql">true</property>  
         <!-- hbm2ddl.auto此属性属于自动建表，可选可不选 -->

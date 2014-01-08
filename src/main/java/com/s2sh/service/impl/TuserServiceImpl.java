@@ -34,7 +34,7 @@ public class TuserServiceImpl implements ITuserService {
 	public Tuser isLogin(Tuser tuser) {
 		System.out.println("进入service方法！！！");
 		String hql = "from Tuser where username = ? and password = ?";
-		List<Tuser> list = baseDao.findAll(hql, Tuser.class, new Object[] {
+		List<Tuser> list = (List<Tuser>) baseDao.findAll(hql,1,Tuser.class, new Object[] {
 				tuser.getUsername(), tuser.getPassword() });
 		if (list.size() > 0) {
 			return (Tuser) list.get(0);

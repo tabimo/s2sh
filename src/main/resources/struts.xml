@@ -3,7 +3,7 @@
 <struts>
 
 <constant name="struts.devMode" value="false" />  
-    <constant name="struts.i18n.encoding" value="UTF-8" /> 
+<constant name="struts.i18n.encoding" value="UTF-8" /> 
 
 <package name="pgk" namespace="/" extends="struts-default">
 	<!-- 配置action管理页面的跳转
